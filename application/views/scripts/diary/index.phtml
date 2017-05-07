@@ -1,0 +1,93 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header"><i class="fa fa-dashboard fa-fw"></i> Дневник расходов</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <table width=100%>
+                    <tr  align="center">
+                        <td align="left">
+                            <div class="dataTables_length" id="dataTables-example_length">
+                                <button id='showPicker' type="button" class="btn btn-default">Выберите период</button>
+                                <span id='sort_period'>&nbsp;&nbsp;Все записи...</span>
+                                <span id='balance'>&nbsp;&nbsp;
+                                    <i class="fa fa-dashboard fa-long-arrow-down " style="color: red;">
+                                        &nbsp;Расход: <?=number_format($this->info_out['ua'],2,'.','')?>/<?=number_format($this->info_out['usd'],2,'.','')?>
+                                    </i> 
+                                    <i class="fa fa-dashboard fa-long-arrow-up" style="color: green;">
+                                        &nbsp;Приход: <?=number_format($this->info_in['ua'],2,'.','')?>/<?=number_format($this->info_in['usd'],2,'.','')?>
+                                    </i>
+                                    Баланс: <?=number_format($this->info_in['ua']-$this->info_out['ua'],2,'.','')?>/<?=number_format($this->info_in['usd']-$this->info_out['usd'],2,'.','')?>
+                                </span>
+                            </div>
+                        </td>
+                        <td align="center">
+                            <div class="dataTables_length" id="dataTables-example_length" >
+                                <button type="button" onclick="window.location.href = '/income/'" class="btn btn-default">Заработать</button>
+                                <button type="button" onclick="window.location.href = '/spend/'"class="btn btn-default">Потратить</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+  
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-1">
+                </div>
+                <div class="col-lg-3">
+                    <span id="datepicker_1"></span>
+                </div>
+                <div class="col-lg-3">
+                    <span id="datepicker_2"></span>
+                </div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body" id='ajax_no_data'>
+                <div class="dataTable_wrapper">
+                    <table  cellpadding="10" width=100% class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th><center><i class="fa fa-shopping-cart"></i></center></th>
+                                <th>Дата</th>
+                                <th>Операция</th>
+                                <th><center>UAN</center></th>
+                                <th><center>USD</center></th>
+                                <th><center>Управление 
+                                </center></th>
+                            </tr>
+                         </thead>
+                        <tbody id='ajax_data'>
+                            
+                        <?php
+                        foreach ($this->diary as $rows) {
+                            ?> <tr id='<?= $this->escape($rows['id']) ?>' class="gradeA row_set">
+                                <td><center><i <?php if ($this->escape($rows['direction'])=='in') {echo 'style="color: #8FBC8F"';} else {echo 'style="color: #E9967A"';}  ?> data-toggle="tooltip" data-original-title="торговая точка" class="shop support-hover fa fa-shopping-cart "></i></center></td>
+                                <td><?php echo $this->escape($rows['date']);?></td>
+                                <td><?php echo $rows['operation'];?></td>
+                                <td><center><?php echo $this->escape(number_format($rows['cash_ua'], 2,'.',''));?></center></td>
+                                <td><center><?php echo $this->escape(number_format($rows['cash_usd'], 2,'.',''));?></center></td>
+                                <td><center>
+                                    <a data-toggle="tooltip" class="btn btn-primary btn-sm" data-original-title="редактировать аппарат" href="/diary/edit/direct/<?= $this->escape($rows['direction']) ?>/id/<?= $this->escape($rows['id']) ?>"><i class="fa fa-pencil fa-fw" ></i></a>
+                                    <a data-toggle="tooltip" class="btn btn-danger btn-sm delete"  data-original-title="удалить аппарат" href="/diary/delete/id/<?= $this->escape($rows['id']) ?>" rel='<?= $this->escape($rows['id']) ?>'><i class="fa fa-trash-o fa-fw" ></i></a>
+                                </center></td>
+                            </tr>
+                        <? } ?>  
+                                                    
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>

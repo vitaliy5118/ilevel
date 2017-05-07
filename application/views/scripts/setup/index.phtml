@@ -1,0 +1,75 @@
+<?php global $settings; ?>
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header"><i class="fa fa-gears"></i> Настройки</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>	
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h4>Версия программы: <b>1.0</b></h4>
+                    </div>
+                    <div class="col-lg-6">
+                        <button type="button" onclick="window.location.href = '/setup/add/'" class="btn btn-default">Добавить операцию</button>
+                    </div>
+                </div>
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                    <table width=100% class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th><center>Операция</center></th>
+                                <th><center>Напавление</center></th>
+                                <th><center><i class="fa fa-gears"></i></center></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        foreach ($this->operations as $rows) {
+                            ?> <tr id='<?= $this->escape($rows['id']) ?>' class="gradeA row_set">
+                                <td><?php echo $rows['operation'];?></td>
+                                <td><?php if($rows['direction'] === 'in') {echo 'Заработать';} else {echo 'Потратить';} ?> </td>
+                                <td><center>
+                                    <a data-toggle="tooltip" class="btn btn-danger btn-sm delete_operation"  data-original-title="удалить аппарат" href="/catalog/delete/id/<?= $this->escape($rows['id']) ?>" rel='<?= $this->escape($rows['id']) ?>'><i class="fa fa-trash-o fa-fw" ></i></a>
+                                </center></td>
+                            </tr>
+                        <? } ?>  
+                         
+                        </tbody>
+                    </table>
+                    <br>
+                    <table width=100% class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th><center>Добавить/Обновить базу данных</center></th>
+                        <th><center><i class="fa fa-gears"></i></center></th>
+
+                        </tr>
+
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><center>Создать новую базу данных</center></td>
+                                <td width="25%"><center><button type="button" onclick="window.location.href = '/setup/make/'" class="btn btn-primary">&nbsp;Создать&nbsp; </button></center></td>
+                            </tr>                            
+                            <tr>
+                                <td><center>Загрузить начальные данные</center></td>
+                                <td width="25%"><center><button type="button" onclick="window.location.href = '/setup/load/'" class="btn btn-primary">Загрузить</button></center></td>
+                            </tr>                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
